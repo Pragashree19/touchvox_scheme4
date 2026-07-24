@@ -1,90 +1,72 @@
-<!-- To be added -->
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TouchVox Central Nurse Station</title>
 
-  <link rel="stylesheet" href="style.css">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TouchVox Central Nurse Station</title>
+
+    <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
 
-<div class="container">
+    <div class="container">
 
-    <header>
-        <h1>🏥 TouchVox Central Nurse Station</h1>
-        <p>Wearable Patient Communication System</p>
-    </header>
+        <header>
 
-    <div class="dashboard">
+            <h1>🏥 TouchVox Central Nurse Station</h1>
 
-        <div class="patient-card">
+            <p>Wearable Patient Communication System</p>
 
-            <div class="card-title">
-                Patient Information
-            </div>
+        </header>
 
-            <div class="info">
 
-                <p><strong>Room Number :</strong> <span id="room">101</span></p>
+        <!-- Emergency Section -->
 
-                <p><strong>Patient Name :</strong> <span id="patient">Test Patient</span></p>
+        <section class="emergency-section">
 
-                <p>
-                    <strong>Status :</strong>
+            <h2>🚨 Emergency Alerts</h2>
 
-                    <span id="status" class="online">
-                        🟢 Online
-                    </span>
-                </p>
+            <div id="emergencyContainer">
+
+                <div class="empty-card">
+
+                    No Emergency Alerts
+
+                </div>
 
             </div>
 
-        </div>
+        </section>
 
-        <div class="request-card">
 
-            <div class="card-title">
+        <!-- Normal Requests -->
 
-                Pending Requests
+        <section class="request-section">
 
-            </div>
+            <h2>📋 Patient Requests</h2>
 
-            <div id="requestList" class="request-list">
+            <div id="requestContainer">
 
-            </div>
+                <div class="empty-card">
 
-        </div>
+                    No Pending Requests
 
-        <div class="selected-card">
-
-            <div class="card-title">
-
-                Selected Request
+                </div>
 
             </div>
 
-            <div id="selectedRequest" class="selected-request">
-
-                No request selected
-
-            </div>
-
-            <button id="ackBtn">
-
-                ACKNOWLEDGE
-
-            </button>
-
-        </div>
+        </section>
 
     </div>
 
-</div>
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 
 </body>
+
 </html>
