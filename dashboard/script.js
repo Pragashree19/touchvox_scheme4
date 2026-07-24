@@ -1,244 +1,162 @@
-/* ==========================================================
-   TouchVox Nurse Dashboard
-   Temporary Simulation Version
-   Later this data will come from the ESP32 through Node.js.
-========================================================== */
+const requestContainer = document.getElementById("requestContainer");
+const emergencyContainer = document.getElementById("emergencyContainer");
 
-let emergencyAlerts = [];
-
-let requests = [
-
-{
-    id:1,
-    room:"101",
-    patient:"Test Patient",
-    message:"💧 Water",
-    time:"10:15 AM"
-},
-
-{
-    id:2,
-    room:"101",
-    patient:"Test Patient",
-    message:"🛏 Blanket",
-    time:"10:17 AM"
-},
-
-{
-    id:3,
-    room:"101",
-    patient:"Test Patient",
-    message:"🤧 Cough",
-    time:"10:19 AM"
-}
-
-];
-
-const requestContainer=document.getElementById("requestContainer");
-
-const emergencyContainer=document.getElementById("emergencyContainer");
-
+let requests = [];
 
 /* -----------------------------
-   Render Normal Requests
+   Fetch Requests from Server
 ------------------------------*/
 
-function renderRequests(){
+async function loadRequests() {
 
-    if(requests.length==0){
+    try {
 
-        requestContainer.innerHTML=`
-        <div class="empty-card">
-        No Pending Requests
-        </div>
-        `;
+        const response = await fetch("http://localhost:3000/requests");
+        requests = await response.json();
 
-        return;
+        render();
+
+    } catch (err) {
+
+        console.log(err);
 
     }
 
-    requestContainer.innerHTML="";
+}
 
-    requests.forEach(req=>{
 
-        requestContainer.innerHTML+=`
+/* -----------------------------
+   Render Dashboard
+------------------------------*/
 
-        <div class="request-card">
+function render() {
 
-            <div class="request-title">
+    requestContainer.innerHTML = "";
+    emergencyContainer.innerHTML = "";
+
+    let normalFound = false;
+    let emergencyFound = false;
+
+    requests.forEach(req => {
+
+        if (req.type === "EMERGENCY") {
+
+            emergencyFound = true;
+
+            emergencyContainer.innerHTML += `
+
+            <div class="emergency-card">
+
+                <div class="emergency-title">
+                    🚨 EMERGENCY ALERT
+                </div>
+
+                <p><b>Room :</b> ${req.room}</p>
+
+                <p><b>Patient :</b> ${req.patient}</p>
+
+                <p><b>Immediate Assistance Required</b></p>
+
+                <p>${req.time}</p>
+
+                <button
+                class="emergency-btn"
+                onclick="acknowledge(${req.id})">
+
+                ACKNOWLEDGE
+
+                </button>
+
+            </div>
+
+            `;
+
+        }
+
+        else {
+
+            normalFound = true;
+
+            requestContainer.innerHTML += `
+
+            <div class="request-card">
+
+                <div class="request-title">
 
                 ${req.message}
 
-            </div>
+                </div>
 
-            <p class="room">
+                <p><b>Room :</b> ${req.room}</p>
 
-                Room : ${req.room}
+                <p><b>Patient :</b> ${req.patient}</p>
 
-            </p>
+                <p>${req.time}</p>
 
-            <p class="patient">
-
-                Patient : ${req.patient}
-
-            </p>
-
-            <p class="time">
-
-                ${req.time}
-
-            </p>
-
-            <button
+                <button
                 class="request-btn"
-                onclick="ackRequest(${req.id})">
+                onclick="acknowledge(${req.id})">
 
                 ACKNOWLEDGE
 
-            </button>
+                </button>
 
-        </div>
+            </div>
 
-        `;
+            `;
+
+        }
 
     });
 
-}
+    if (!normalFound) {
 
+        requestContainer.innerHTML =
 
-/* -----------------------------
-   Render Emergency Alerts
-------------------------------*/
+        `<div class="empty-card">
 
-function renderEmergency(){
+        No Pending Requests
 
-    if(emergencyAlerts.length==0){
-
-        emergencyContainer.innerHTML=`
-
-        <div class="empty-card">
-
-            No Emergency Alerts
-
-        </div>
-
-        `;
-
-        return;
+        </div>`;
 
     }
 
-    emergencyContainer.innerHTML="";
+    if (!emergencyFound) {
 
-    emergencyAlerts.forEach(alert=>{
+        emergencyContainer.innerHTML =
 
-        emergencyContainer.innerHTML+=`
+        `<div class="empty-card">
 
-        <div class="emergency-card">
+        No Emergency Alerts
 
-            <div class="emergency-title">
+        </div>`;
 
-                🚨 EMERGENCY ALERT
+    }
 
-            </div>
+}
 
-            <p class="room">
 
-                Room : ${alert.room}
+/* -----------------------------
+   Acknowledge
+------------------------------*/
 
-            </p>
+async function acknowledge(id) {
 
-            <p class="patient">
+    await fetch("http://localhost:3000/request/" + id, {
 
-                Patient : ${alert.patient}
-
-            </p>
-
-            <p>
-
-                Immediate Assistance Required
-
-            </p>
-
-            <p class="time">
-
-                ${alert.time}
-
-            </p>
-
-            <button
-
-                class="emergency-btn"
-
-                onclick="ackEmergency(${alert.id})">
-
-                ACKNOWLEDGE
-
-            </button>
-
-        </div>
-
-        `;
+        method: "DELETE"
 
     });
 
-}
-
-
-/* -----------------------------
-   Acknowledge Request
-------------------------------*/
-
-function ackRequest(id){
-
-    requests=requests.filter(r=>r.id!=id);
-
-    renderRequests();
+    loadRequests();
 
 }
 
 
 /* -----------------------------
-   Acknowledge Emergency
+   Refresh every second
 ------------------------------*/
 
-function ackEmergency(id){
+setInterval(loadRequests,1000);
 
-    emergencyAlerts=
-    emergencyAlerts.filter(e=>e.id!=id);
-
-    renderEmergency();
-
-}
-
-
-/* ==========================================================
-   TEMPORARY TEST DATA
-========================================================== */
-
-/* Uncomment this block to test emergency card
-
-setTimeout(()=>{
-
-emergencyAlerts.push({
-
-id:101,
-
-room:"101",
-
-patient:"Test Patient",
-
-time:"10:25 AM"
-
-});
-
-renderEmergency();
-
-},5000);
-
-*/
-
-
-renderRequests();
-
-renderEmergency();
+loadRequests();
