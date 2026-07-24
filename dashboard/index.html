@@ -1,1 +1,90 @@
 <!-- To be added -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TouchVox Central Nurse Station</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>🏥 TouchVox Central Nurse Station</h1>
+        <p>Wearable Patient Communication System</p>
+    </header>
+
+    <div class="dashboard">
+
+        <div class="patient-card">
+
+            <div class="card-title">
+                Patient Information
+            </div>
+
+            <div class="info">
+
+                <p><strong>Room Number :</strong> <span id="room">101</span></p>
+
+                <p><strong>Patient Name :</strong> <span id="patient">Test Patient</span></p>
+
+                <p>
+                    <strong>Status :</strong>
+
+                    <span id="status" class="online">
+                        🟢 Online
+                    </span>
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="request-card">
+
+            <div class="card-title">
+
+                Pending Requests
+
+            </div>
+
+            <div id="requestList" class="request-list">
+
+            </div>
+
+        </div>
+
+        <div class="selected-card">
+
+            <div class="card-title">
+
+                Selected Request
+
+            </div>
+
+            <div id="selectedRequest" class="selected-request">
+
+                No request selected
+
+            </div>
+
+            <button id="ackBtn">
+
+                ACKNOWLEDGE
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
