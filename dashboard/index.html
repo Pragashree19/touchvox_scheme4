@@ -3,69 +3,123 @@
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>TouchVox Central Nurse Station</title>
+<title>TouchVox Nurse Dashboard</title>
 
-    <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css">
 
 </head>
 
 <body>
 
-    <div class="container">
+<div class="dashboard">
 
-        <header>
+    <!-- HEADER -->
 
-            <h1>🏥 TouchVox Central Nurse Station</h1>
+    <header class="topbar">
 
-            <p>Wearable Patient Communication System</p>
+        <div>
 
-        </header>
+            <h1>🏥 TouchVox</h1>
 
+            <span class="subtitle">
+                Wearable Patient Communication System
+            </span>
 
-        <!-- Emergency Section -->
+        </div>
 
-        <section class="emergency-section">
+        <div class="live">
 
-            <h2>🚨 Emergency Alerts</h2>
+            <span class="dot"></span>
 
-            <div id="emergencyContainer">
+            LIVE
 
-                <div class="empty-card">
+        </div>
 
-                    No Emergency Alerts
-
-                </div>
-
-            </div>
-
-        </section>
+    </header>
 
 
-        <!-- Normal Requests -->
+    <!-- STATS -->
 
-        <section class="request-section">
+    <section class="stats">
 
-            <h2>📋 Patient Requests</h2>
+        <div class="stat-card">
 
-            <div id="requestContainer">
+            <h2 id="activeCalls">0</h2>
 
-                <div class="empty-card">
+            <p>Active Calls</p>
 
-                    No Pending Requests
+        </div>
 
-                </div>
+        <div class="stat-card emergency">
 
-            </div>
+            <h2 id="emergencyCount">0</h2>
 
-        </section>
+            <p>Emergency Alerts</p>
 
-    </div>
+        </div>
 
-    <script src="script.js"></script>
+        <div class="stat-card">
+
+            <h2 id="todayCalls">0</h2>
+
+            <p>Total Calls Today</p>
+
+        </div>
+
+        <div class="stat-card">
+
+            <h2 id="roomCount">1</h2>
+
+            <p>Rooms Online</p>
+
+        </div>
+
+    </section>
+
+
+    <!-- EMERGENCY -->
+
+    <section>
+
+        <h2 class="sectionTitle">
+
+            🚨 Emergency Alerts
+
+        </h2>
+
+        <div id="emergencyContainer" class="emergencyGrid">
+
+        </div>
+
+    </section>
+
+
+
+    <!-- PATIENT REQUESTS -->
+
+    <section>
+
+        <h2 class="sectionTitle">
+
+            📋 Patient Requests
+
+        </h2>
+
+        <div id="requestContainer" class="requestGrid">
+
+        </div>
+
+    </section>
+
+
+
+</div>
+
+<script src="script.js"></script>
 
 </body>
 
